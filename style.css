@@ -1,0 +1,106 @@
+/* Basic body styling */
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f4f8;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+/* Dark mode body */
+body.dark {
+  background: #121212;
+  color: white;
+}
+
+/* Main container */
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+  width: 300px;
+  text-align: center;
+}
+
+/* Dark mode container */
+body.dark .container {
+  background: #1e1e1e;
+  box-shadow: 0 0 10px #333;
+}
+
+/* Input field */
+input {
+  padding: 8px;
+  width: 70%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: inherit;
+  background: inherit;
+}
+
+/* Add and dark mode buttons */
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin: 0 5px 10px 0;
+}
+
+/* Dark mode buttons */
+body.dark button {
+  background-color: #388e3c;
+}
+
+/* Task list */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+/* Each task item */
+li {
+  background: #eee;
+  margin: 5px 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px;
+  color: inherit;
+}
+
+/* Dark mode task item */
+body.dark li {
+  background: #333;
+  color: white;
+}
+
+/* Completed tasks */
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/* Task details container */
+li div {
+  flex-grow: 1;
+  text-align: left;
+}
+
+/* Due date style */
+li small {
+  font-size: 0.8em;
+  color: #555;
+}
+
+/* Dark mode due date */
+body.dark li small {
+  color: #bbb;
+}
