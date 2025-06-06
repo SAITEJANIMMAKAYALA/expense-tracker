@@ -1,63 +1,64 @@
-const taskList = document.getElementById("taskList");
+const expenseForm = document.getElementById("expenseForm");
+const expenseList = document.getElementById("expenseList");
+const totalAmount = document.getElementById("totalAmount");
 
-// Add a new task with optional due date
-function addTask() {
-  const input = document.getElementById("taskInput");
-  const taskText = input.value.trim();
-  if (taskText === "") return;
+let expenses = [];
 
-  const dueDate = prompt("Enter due date (e.g. 2025-06-10):");
-
-  const li = document.createElement("li");
-  li.innerHTML = `
-    <div>
-      <span ondblclick="editTask(this)">${taskText}</span><br>
-      <small>Due: ${dueDate || "Not set"}</small>
-    </div>
-    <button onclick="deleteTask(this)">❌</button>
-  `;
-
-  taskList.appendChild(li);
-  input.value = "";
-  saveTasks();
-}
-
-// Delete a task
-function deleteTask(button) {
-  button.parentElement.remove();
-  saveTasks();
-}
-
-// Edit a task text on double click
-function editTask(span) {
-  const newText = prompt("Edit your task:", span.textContent);
-  if (newText !== null && newText.trim() !== "") {
-    span.textContent = newText.trim();
-    saveTasks();
+// Load expenses from localStorage
+function loadExpenses() {
+  const stored = localStorage.getItem("expenses");
+  if (stored) {
+    expenses = JSON.parse(stored);
+  } else {
+    expenses = [];
   }
 }
 
-// Save current task list to localStorage
-function saveTasks() {
-  localStorage.setItem("tasks", taskList.innerHTML);
+// Save expenses to localStorage
+function saveExpenses() {
+  localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 
-// Load saved tasks from localStorage
-function loadTasks() {
-  taskList.innerHTML = localStorage.getItem("tasks") || "";
+// Render expenses on page
+function renderExpenses() {
+  expenseList.innerHTML = "";
+
+  expenses.forEach((expense, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <div>${expense.category} - ₹${expense.amount.toFixed(2)}</div>
+      <div>${expense.date}</div>
+    `;
+    expenseList.appendChild(li);
+  });
+
+  // Calculate total
+  const total = expenses.reduce((sum, e) => sum + e.amount, 0);
+  totalAmount.textContent = total.toFixed(2);
 }
 
-// Toggle dark mode and save preference
-function toggleDarkMode() {
-  document.body.classList.toggle("dark");
-  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
-}
+// Handle form submit
+expenseForm.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-// Load saved tasks and dark mode on page load
-window.onload = function () {
-  loadTasks();
+  const amount = parseFloat(document.getElementById("amount").value);
+  const category = document.getElementById("category").value.trim();
+  const date = document.getElementById("date").value;
 
-  if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
+  if (!amount || !category || !date) {
+    alert("Please fill all fields correctly.");
+    return;
   }
-};
+
+  expenses.push({ amount, category, date });
+
+  saveExpenses();
+  renderExpenses();
+
+  // Clear form
+  expenseForm.reset();
+});
+
+// Initialize
+loadExpenses();
+renderExpenses();
