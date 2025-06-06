@@ -50,6 +50,8 @@ button:hover {
   padding-left: 0;
   max-height: 250px;
   overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 #expenseList li {
