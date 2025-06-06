@@ -1,3 +1,4 @@
+console.log("Script loaded and running");
 const expenseForm = document.getElementById("expenseForm");
 const expenseList = document.getElementById("expenseList");
 const totalAmount = document.getElementById("totalAmount");
