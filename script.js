@@ -25,16 +25,29 @@ function renderExpenses() {
 
   expenses.forEach((expense, index) => {
     const li = document.createElement("li");
+
     li.innerHTML = `
-      <div>${expense.category} - ₹${expense.amount.toFixed(2)}</div>
-      <div>${expense.date}</div>
+      <div>
+        ${expense.category} - ₹${expense.amount.toFixed(2)}<br/>
+        <small>${expense.date}</small>
+      </div>
+      <button class="delete-btn" onclick="deleteExpense(${index})">🗑️</button>
     `;
+
     expenseList.appendChild(li);
   });
 
-  // Calculate total
   const total = expenses.reduce((sum, e) => sum + e.amount, 0);
   totalAmount.textContent = total.toFixed(2);
+}
+
+// Delete expense
+function deleteExpense(index) {
+  if (confirm("Are you sure you want to delete this expense?")) {
+    expenses.splice(index, 1);
+    saveExpenses();
+    renderExpenses();
+  }
 }
 
 // Handle form submit
@@ -55,10 +68,9 @@ expenseForm.addEventListener("submit", function (e) {
   saveExpenses();
   renderExpenses();
 
-  // Clear form
   expenseForm.reset();
 });
 
-// Initialize on page load
+// Initialize
 loadExpenses();
 renderExpenses();
