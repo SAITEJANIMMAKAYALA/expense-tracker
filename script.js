@@ -1,4 +1,3 @@
-console.log("Script loaded and running");
 const expenseForm = document.getElementById("expenseForm");
 const expenseList = document.getElementById("expenseList");
 const totalAmount = document.getElementById("totalAmount");
@@ -60,6 +59,6 @@ expenseForm.addEventListener("submit", function (e) {
   expenseForm.reset();
 });
 
-// Initialize
+// Initialize on page load
 loadExpenses();
 renderExpenses();
